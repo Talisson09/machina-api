@@ -47,9 +47,8 @@ def time_recente(nome):
             [
                 "sports-skills",
                 "football",
-                "get_team_schedule",
-    "--team_id=2029",
-    "--season_id=serie-a-brazil-2026"
+                "get_season_standings",
+                "--season_id=serie-a-brazil-2026"
             ],
             capture_output=True,
             text=True,
@@ -101,8 +100,8 @@ def jogos_time(nome):
                 "sports-skills",
                 "football",
                 "get_team_schedule",
-                "--team_name=" + nome,
-                "--season_id=serie-a-brazil-2026"
+    "--team_id=2029",
+    "--season_id=serie-a-brazil-2026"
             ],
             capture_output=True,
             text=True,
