@@ -208,3 +208,33 @@ def estatisticas_partida(partida_id):
             "ok": False,
             "erro": str(e)
         }), 500
+@app.route("/jogadores/<partida_id>")
+def jogadores_partida(partida_id):
+    try:
+        resultado = subprocess.run(
+            [
+                "sports-skills",
+                "football",
+                "get_event_players_statistics",
+                "--event_id=" + partida_id
+            ],
+            capture_output=True,
+            text=True,
+            timeout=60
+        )
+
+        if resultado.returncode != 0:
+            return jsonify({
+                "ok": False,
+                "erro": resultado.stderr
+            }), 500
+
+        return jsonify(
+            json.loads(resultado.stdout)
+        )
+
+    except Exception as e:
+        return jsonify({
+            "ok": False,
+            "erro": str(e)
+        }), 500
