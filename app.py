@@ -101,7 +101,7 @@ def jogos_time(nome):
                 "football",
                 "get_team_schedule",
     "--team_id=2029",
-    "--season_id=serie-a-brazil-2026"
+
             ],
             capture_output=True,
             text=True,
