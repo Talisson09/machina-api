@@ -135,20 +135,18 @@ def jogos_time(nome):
 
         team_id = None
 
-for item in entries:
+        for item in entries:
+            time = item.get("team", {})
 
-    time = item.get("team", {})
+            if nome_busca in time.get("name", "").lower():
+                team_id = time.get("id")
+                break
 
-    if nome_busca in time.get("name", "").lower():
-        team_id = time.get("id")
-        break
-
-if not team_id:
-    return jsonify({
-        "ok": False,
-        "erro": "Time não encontrado"
-    }), 404
-
+        if not team_id:
+            return jsonify({
+                "ok": False,
+                "erro": "Time não encontrado"
+            }), 404
 
         resultado = subprocess.run(
             [
