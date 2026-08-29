@@ -239,15 +239,14 @@ def jogadores_partida(partida_id):
             "erro": str(e)
         }), 500
 
-@app.route("/brasileirao-b")
-def brasileirao_b():
+@app.route("/competicoes")
+def competicoes():
     try:
         resultado = subprocess.run(
             [
                 "sports-skills",
                 "football",
-                "get_season_standings",
-                "--season_id=serie-b-brazil-2026"
+                "get_competitions"
             ],
             capture_output=True,
             text=True,
