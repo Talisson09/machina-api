@@ -170,7 +170,7 @@ def estatisticas_partida(partida_id):
             [
                 "sports-skills",
                 "football",
-                "get_match_statistics",
+                "get_event_statistics",
                 "--event_id=" + partida_id
             ],
             capture_output=True,
