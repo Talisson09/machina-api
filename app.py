@@ -96,6 +96,21 @@ def time_recente(nome):
 @app.route("/jogos/<nome>")
 def jogos_time(nome):
     try:
+
+        apelidos = {
+    "atletico-mg": "atlético mineiro",
+    "atletico mg": "atlético mineiro",
+    "sao paulo": "são paulo",
+    "rb bragantino": "red bull bragantino",
+    "bragantino": "red bull bragantino",
+    "vasco da gama": "vasco",
+    "botafogo sp": "botafogo-sp"
+}
+
+nome_busca = nome.lower().strip()
+
+if nome_busca in apelidos:
+    nome_busca = apelidos[nome_busca]
         
         tabela = subprocess.run(
             [
@@ -120,19 +135,20 @@ def jogos_time(nome):
 
         team_id = None
 
-        for item in entries:
+for item in entries:
 
-            time = item.get("team", {})
+    time = item.get("team", {})
 
-            if nome.lower() in time.get("name", "").lower():
-                team_id = time.get("id")
-                break
+    if nome_busca in time.get("name", "").lower():
+        team_id = time.get("id")
+        break
 
-        if not team_id:
-            return jsonify({
-                "ok": False,
-                "erro": "Time não encontrado"
-            }), 404
+if not team_id:
+    return jsonify({
+        "ok": False,
+        "erro": "Time não encontrado"
+    }), 404
+
 
         resultado = subprocess.run(
             [
