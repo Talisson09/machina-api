@@ -90,7 +90,9 @@ def time_recente(nome):
         return jsonify({
             "ok": False,
             "erro": str(e)
-        }),
+        }), 500
+
+
         @app.route("/jogos/<nome>")
 def jogos_time(nome):
     try:
