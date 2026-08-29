@@ -43,27 +43,48 @@ def brasileirao():
 @app.route("/time/<nome>")
 def time_recente(nome):
     try:
-        busca = subprocess.run(
+        resultado = subprocess.run(
             [
                 "sports-skills",
                 "football",
-                "search_team",
-                "--query=" + nome
+                "get_season_standings",
+                "--season_id=serie-a-brazil-2026"
             ],
             capture_output=True,
             text=True,
-            timeout=120
+            timeout=60
         )
 
-        if busca.returncode != 0:
+        if resultado.returncode != 0:
             return jsonify({
                 "ok": False,
-                "erro": busca.stderr
+                "erro": resultado.stderr
             }), 500
 
-        dados_time = json.loads(busca.stdout)
+        dados = json.loads(resultado.stdout)
 
-        return jsonify(dados_time)
+        entries = (
+            dados
+            .get("data", {})
+            .get("standings", [{}])[0]
+            .get("entries", [])
+        )
+
+        nome_busca = nome.lower()
+
+        for item in entries:
+            time = item.get("team", {})
+
+            if nome_busca in time.get("name", "").lower():
+                return jsonify({
+                    "ok": True,
+                    "time": time
+                })
+
+        return jsonify({
+            "ok": False,
+            "erro": "Time não encontrado"
+        }), 404
 
     except Exception as e:
         return jsonify({
