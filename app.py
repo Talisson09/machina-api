@@ -90,18 +90,53 @@ def time_recente(nome):
         return jsonify({
             "ok": False,
             "erro": str(e)
-        }), 500
-
-@app.route("/jogos/<nome>")
+        }), @app.route("/jogos/<nome>")
 def jogos_time(nome):
     try:
+
+        tabela = subprocess.run(
+            [
+                "sports-skills",
+                "football",
+                "get_season_standings",
+                "--season_id=serie-a-brazil-2026"
+            ],
+            capture_output=True,
+            text=True,
+            timeout=60
+        )
+
+        dados = json.loads(tabela.stdout)
+
+        entries = (
+            dados
+            .get("data", {})
+            .get("standings", [{}])[0]
+            .get("entries", [])
+        )
+
+        team_id = None
+
+        for item in entries:
+
+            time = item.get("team", {})
+
+            if nome.lower() in time.get("name", "").lower():
+                team_id = time.get("id")
+                break
+
+        if not team_id:
+            return jsonify({
+                "ok": False,
+                "erro": "Time não encontrado"
+            }), 404
+
         resultado = subprocess.run(
             [
                 "sports-skills",
                 "football",
                 "get_team_schedule",
-    "--team_id=2029",
-
+                "--team_id=" + str(team_id)
             ],
             capture_output=True,
             text=True,
@@ -114,9 +149,9 @@ def jogos_time(nome):
                 "erro": resultado.stderr
             }), 500
 
-        dados = json.loads(resultado.stdout)
-
-        return jsonify(dados)
+        return jsonify(
+            json.loads(resultado.stdout)
+        )
 
     except Exception as e:
         return jsonify({
