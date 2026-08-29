@@ -98,19 +98,19 @@ def jogos_time(nome):
     try:
 
         apelidos = {
-    "atletico-mg": "atlético mineiro",
-    "atletico mg": "atlético mineiro",
-    "sao paulo": "são paulo",
-    "rb bragantino": "red bull bragantino",
-    "bragantino": "red bull bragantino",
-    "vasco da gama": "vasco",
-    "botafogo sp": "botafogo-sp"
-}
+            "atletico-mg": "atlético mineiro",
+            "atletico mg": "atlético mineiro",
+            "sao paulo": "são paulo",
+            "rb bragantino": "red bull bragantino",
+            "bragantino": "red bull bragantino",
+            "vasco da gama": "vasco",
+            "botafogo sp": "botafogo-sp"
+        }
 
-nome_busca = nome.lower().strip()
+        nome_busca = nome.lower().strip()
 
-if nome_busca in apelidos:
-    nome_busca = apelidos[nome_busca]
+        if nome_busca in apelidos:
+            nome_busca = apelidos[nome_busca]
         
         tabela = subprocess.run(
             [
