@@ -91,3 +91,35 @@ def time_recente(nome):
             "ok": False,
             "erro": str(e)
         }), 500
+
+@app.route("/jogos/<nome>")
+def jogos_time(nome):
+    try:
+        resultado = subprocess.run(
+            [
+                "sports-skills",
+                "football",
+                "get_team_schedule",
+                "--team_name=" + nome,
+                "--season_id=serie-a-brazil-2026"
+            ],
+            capture_output=True,
+            text=True,
+            timeout=60
+        )
+
+        if resultado.returncode != 0:
+            return jsonify({
+                "ok": False,
+                "erro": resultado.stderr
+            }), 500
+
+        dados = json.loads(resultado.stdout)
+
+        return jsonify(dados)
+
+    except Exception as e:
+        return jsonify({
+            "ok": False,
+            "erro": str(e)
+        }), 500
