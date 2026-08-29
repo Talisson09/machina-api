@@ -238,3 +238,34 @@ def jogadores_partida(partida_id):
             "ok": False,
             "erro": str(e)
         }), 500
+
+@app.route("/brasileirao-b")
+def brasileirao_b():
+    try:
+        resultado = subprocess.run(
+            [
+                "sports-skills",
+                "football",
+                "get_season_standings",
+                "--season_id=serie-b-brazil-2026"
+            ],
+            capture_output=True,
+            text=True,
+            timeout=60
+        )
+
+        if resultado.returncode != 0:
+            return jsonify({
+                "ok": False,
+                "erro": resultado.stderr
+            }), 500
+
+        return jsonify(
+            json.loads(resultado.stdout)
+        )
+
+    except Exception as e:
+        return jsonify({
+            "ok": False,
+            "erro": str(e)
+        }), 500
