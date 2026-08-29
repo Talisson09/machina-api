@@ -98,8 +98,8 @@ def jogos_time(nome):
     try:
 
         apelidos = {
-            "atletico-mg": "atlético mineiro",
-            "atletico mg": "atlético mineiro",
+            "atletico-mg": "atlético-mg",
+"atletico mg": "atlético-mg",
             "sao paulo": "são paulo",
             "rb bragantino": "red bull bragantino",
             "bragantino": "red bull bragantino",
