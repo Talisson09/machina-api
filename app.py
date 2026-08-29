@@ -19,8 +19,7 @@ def brasileirao():
                 "sports-skills",
                 "football",
                 "get_season_standings",
-                "--season_id=serie-a-brazil-2026",
-                "--json"
+                "--season_id=serie-a-brazil-2026"
             ],
             capture_output=True,
             text=True,
