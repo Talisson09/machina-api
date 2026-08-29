@@ -52,7 +52,7 @@ def time_recente(nome):
             ],
             capture_output=True,
             text=True,
-            timeout=30
+            timeout=120
         )
 
         if busca.returncode != 0:
