@@ -93,10 +93,10 @@ def time_recente(nome):
         }), 500
 
 
-        @app.route("/jogos/<nome>")
+@app.route("/jogos/<nome>")
 def jogos_time(nome):
     try:
-
+        
         tabela = subprocess.run(
             [
                 "sports-skills",
