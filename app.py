@@ -101,6 +101,7 @@ def jogos_time(nome):
             "atletico-mg": "atlético-mg",
 "atletico mg": "atlético-mg",
             "sao paulo": "são paulo",
+            "vitoria": "vitória",
             "rb bragantino": "red bull bragantino",
             "bragantino": "red bull bragantino",
             "vasco da gama": "vasco",
