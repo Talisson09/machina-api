@@ -39,3 +39,34 @@ def brasileirao():
             "ok": False,
             "erro": str(e)
         }), 500
+
+@app.route("/time/<nome>")
+def time_recente(nome):
+    try:
+        busca = subprocess.run(
+            [
+                "sports-skills",
+                "football",
+                "search_team",
+                "--query=" + nome
+            ],
+            capture_output=True,
+            text=True,
+            timeout=30
+        )
+
+        if busca.returncode != 0:
+            return jsonify({
+                "ok": False,
+                "erro": busca.stderr
+            }), 500
+
+        dados_time = json.loads(busca.stdout)
+
+        return jsonify(dados_time)
+
+    except Exception as e:
+        return jsonify({
+            "ok": False,
+            "erro": str(e)
+        }), 500
